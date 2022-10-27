@@ -1,94 +1,111 @@
-#include <iostream> 
-using namespace std; 
-class CRC 
-{ 
-public: 
-int nf, ng, frame[20], gen[10], temp[20], b; 
-char a;
-int* divide(int n, int g, int temp[10], int gen[10]) { 
-for(int i=0; i<n; i++) 
-{ 
-if(gen[0]==temp[i]) 
-{ 
-for(int j=0, k=i; j<g+1; j++, k++) 
-{ 
-if(temp[k]^gen[j]==1) 
-temp[k]=1; 
-else 
-temp[k]=0; 
-} 
-} 
-} 
-return temp; 
-} 
-void input() 
-{ 
-cout<<"Enter length of your frame:"; 
-cin>>nf; 
-cout<<"Enter your frame:"; 
-for(int i=0; i<nf; i++)
-{ 
-cin>>frame[i]; 
-temp[i]=frame[i]; 
-} 
-cout<<"Enter length of your generator:"; cin>>ng; 
-cout<<"Enter your generator:"; 
-for(int i=0; i<ng; i++) 
-{ 
-cin>>gen[i]; 
-} 
-ng--; 
-for(int i=0; i<ng; i++) 
-{ 
-temp[nf+i]=0; 
-} 
-} 
-void sender_side() 
-{ 
-int* sender; 
-sender = divide(nf,ng,temp,gen);
-cout<<endl<<"-----Senders Side-----\n"<<"CRC:"; 
-for(int i=0; i<ng; i++) 
-{ 
-frame[nf+i]=sender[nf+i]; 
-cout<<sender[nf+i]<<' '; 
-} 
-cout<<endl<<"Transmitted frame:"; 
-for(int i=0; i<nf+ng; i++) 
-cout<<frame[i]<<' '; 
-cout<<endl; 
-} 
-int receiver_side() 
-{ 
-int* receiver; 
-cout<<"\n-----Receivers Side-----\n"<<"Received message:"; 
-for(int i=0; i<nf+ng; i++) 
-cout<<frame[i]<<' '; 
-cout<<endl; 
-cout<<"Enter which bit you want to change(from 0-"<<nf+ng<<")-";
-cin>>b; 
-if(frame[b]==1) 
-frame[b]=0; 
-else 
-frame[b]=1; 
-receiver = divide(nf,ng,frame,gen); 
-cout<<"Error:"; 
-for(int i=0; i<nf+ng; i++) 
-{ 
-if(receiver[i]!=0) 
-{ 
-cout<<"Error Detected!!"<<endl; 
-return 0; 
-} 
-} 
-cout<<"No error detected!"<<endl; 
-} 
-}; 
-int main() 
-{ 
-CRC o;
-o.input(); 
-o.sender_side(); 
-o.receiver_side(); 
-return 0; 
-}
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+     int a[20],c[20],d[20],aux[20],r,i,j,l,in,flag,choice,key;
+     clrscr();
+
+     printf("\n ENTER THE SIZE OF DATA WORD : ");           
+     scanf("%d",&l);
+
+     printf("\n ENTER THE DATA WORD : ");
+     for(i=0; i<l; i++)
+           scanf("%d",&a[i]);
+
+     printf("\n ENTER THE NUMBER OF REDUNDANT BITS : ");
+     scanf("%d",&r);
+
+     printf("\n ENTER THE DIVISOR : ");
+     for(i=0; i<(r+1); i++)
+           scanf("%d",&d[i]);
+
+     for(i=0; i<(l+r); i++){
+           if(i<l) c[i]=a[i];
+           else c[i]=0;
+     }
+
+     printf("\n\n ... GENERATOR MODULE ... \n");
+     printf("\n\n THE INTERMEDIATE CODE WORD IS : ");
+     for(i=0; i<(l+r); i++)
+           printf("%d ",c[i]);
+
+     for(i=0; i<(l+r); i++)
+           aux[i]=c[i];
+
+     for(i=0; i<l; i++){
+           in=1;
+           if(c[i]==1){
+                for(j=i+1; j<(i+l); j++){
+                     c[j]=c[j]^d[in];
+                     in++;
+                }
+           }
+           else{
+                for(j=i+1; j<(i+l); j++)
+                     c[j]=c[j]^0;
+           }
+     }
+
+     printf("\n\n THE REMAINDER AFTER DIVISION IS : ");   
+     for(i=l; i<(l+r); i++)
+
+           printf("%d ",c[i]);
+
+     printf("\n\n SENDER CODE WORD : ");
+
+     for(i=0; i<(l+r); i++){
+           if(i<l) c[i]=aux[i];
+
+           printf("%d ",c[i]);
+     }
+
+     printf("\n\n\n PRESS 1 IF YOU WANT TO CHANGE A BIT OR 0 TO CONTINUE : ");    
+     scanf("%d",&choice);
+
+     if(choice==1){
+           printf("\n\n ENTER THE BIT YOU WANT TO CHANGE :");
+           scanf("%d",&key);
+           for(i=0; i<(l+r); i++){
+                if(i==(key-1)){
+                     if(c[key-1]==0) c[key-1]=1;
+                     else c[key-1]=0;
+                }
+           }
+
+           printf("\n\n\n CODE WORD AFTER ERROR : ");
+           for(i=0; i<(l+r); i++)
+                printf("%d ",c[i]);
+     }
+
+     else printf("\n\n\n NO ERROR INSERTED IN CODE WORD... ");        
+     printf("\n\n\n\n ... CHECKER MODULE ... ");
+     for(i=0; i<l; i++){
+           in=1;
+           if(c[i]==1){
+                for(j=i+1; j<(i+l); j++){
+                     c[j]=c[j]^d[in];
+                     in++;
+                }
+           }
+
+           else{
+                for(j=i+1; j<(i+l); j++)
+                     c[j]=c[j]^0;
+           }
+     }
+
+     printf("\n\n\n THE SYNDROME ARRAY IS : ");
+     for(i=l; i<(l+r); i++)
+           printf("%d ",c[i]);
+     flag=0;
+     for(i=l; i<(l+r); i++){
+           if(c[i]!=0){
+                flag=1;
+                break;
+           }
+     }
+
+     if(flag==1) printf("\n\n\n ERROR DETECTED !!!");    
+     else printf("\n\n\n NO ERROR FOUND");
+
+     getch();
