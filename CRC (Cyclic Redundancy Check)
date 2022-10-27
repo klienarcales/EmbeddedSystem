@@ -5,17 +5,17 @@ void main()
      int a[20],c[20],d[20],aux[20],r,i,j,l,in,flag,choice,key;
      clrscr();
 
-     printf("\n ENTER THE SIZE OF DATA WORD : ");           
+     printf("\n Enter the size of data: ");           
      scanf("%d",&l);
 
-     printf("\n ENTER THE DATA WORD : ");
+     printf("\n Enter the data word: ");
      for(i=0; i<l; i++)
            scanf("%d",&a[i]);
 
-     printf("\n ENTER THE NUMBER OF REDUNDANT BITS : ");
+     printf("\n Enter the number of redundant bits: ");
      scanf("%d",&r);
 
-     printf("\n ENTER THE DIVISOR : ");
+     printf("\n Enter the divisor: ");
      for(i=0; i<(r+1); i++)
            scanf("%d",&d[i]);
 
@@ -46,12 +46,12 @@ void main()
            }
      }
 
-     printf("\n\n THE REMAINDER AFTER DIVISION IS : ");   
+     printf("\n\n The remainder after division is: ");   
      for(i=l; i<(l+r); i++)
 
            printf("%d ",c[i]);
 
-     printf("\n\n SENDER CODE WORD : ");
+     printf("\n\n Sender code word: ");
 
      for(i=0; i<(l+r); i++){
            if(i<l) c[i]=aux[i];
@@ -59,11 +59,11 @@ void main()
            printf("%d ",c[i]);
      }
 
-     printf("\n\n\n PRESS 1 IF YOU WANT TO CHANGE A BIT OR 0 TO CONTINUE : ");    
+     printf("\n\n\n Press 1 if you want to change a bits or 0 to continue: ");    
      scanf("%d",&choice);
 
      if(choice==1){
-           printf("\n\n ENTER THE BIT YOU WANT TO CHANGE :");
+           printf("\n\n Enter the bit you want to change: ");
            scanf("%d",&key);
            for(i=0; i<(l+r); i++){
                 if(i==(key-1)){
@@ -72,7 +72,7 @@ void main()
                 }
            }
 
-           printf("\n\n\n CODE WORD AFTER ERROR : ");
+           printf("\n\n\n Code word after error: ");
            for(i=0; i<(l+r); i++)
                 printf("%d ",c[i]);
      }
@@ -94,7 +94,7 @@ void main()
            }
      }
 
-     printf("\n\n\n THE SYNDROME ARRAY IS : ");
+     printf("\n\n\n The syndrome array is: ");
      for(i=l; i<(l+r); i++)
            printf("%d ",c[i]);
      flag=0;
