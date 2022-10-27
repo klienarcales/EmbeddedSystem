@@ -1,0 +1,3 @@
+# EmbeddedSystem
+
+The purpose of a memory test is to make sure that every storage spot on a memory device works. In other words, if you store the number 50 at a certain address, you expect to find that number there until another number is written. So, the basic idea behind any memory test is to write some data to each address in the memory device and then read the data back to make sure it is correct. If all the values read back match the ones written, the memory device is said to have passed the test. As you will see, you can only be sure that a passing result means something if you carefully choose the set of data values.
