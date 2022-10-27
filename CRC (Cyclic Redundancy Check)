@@ -25,7 +25,7 @@ void main()
      }
 
      printf("\n\n ... GENERATOR MODULE ... \n");
-     printf("\n\n THE INTERMEDIATE CODE WORD IS : ");
+     printf("\n\n The intermediate code word is: ");
      for(i=0; i<(l+r); i++)
            printf("%d ",c[i]);
 
@@ -105,7 +105,7 @@ void main()
            }
      }
 
-     if(flag==1) printf("\n\n\n ERROR DETECTED !!!");    
+     if(flag==1) printf("\n\n\n ERROR DETECTED!");    
      else printf("\n\n\n NO ERROR FOUND");
 
      getch();
